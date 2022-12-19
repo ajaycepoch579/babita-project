@@ -38,3 +38,9 @@ Route::put('/employeeupdate/{id}', [EmployeeController::class, 'update'])->name(
 Route::delete('/employeedestroy/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
 
 Route::resource('empDepartments', EmpDepartmentController::class);
+Route::get('/empDepartmentindex', [EmpDepartmentController::class, 'index'])->name('empDepartment.index');
+Route::get('/empDepartmentshow/{id}', [EmpDepartmentController::class, 'show'])->name('empDepartment.show');
+Route::post('/empDepartmentcreate', [EmpDepartmentController::class, 'create'])->name('empDepartment.create');
+Route::get('/empDepartmentedit/{id}', [EmpDepartmentController::class, 'edit'])->name('empDepartment.edit');
+Route::put('/empDepartmentupdate/{id}', [EmpDepartmentController::class, 'update'])->name('empDepartment.update');
+Route::delete('/empDepartmentdestroy/{id}', [EmpDepartmentController::class, 'destroy'])->name('empDepartment.destroy');

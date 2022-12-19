@@ -20,7 +20,7 @@ class EmpDepartmentController extends Controller
         $data = [];
         $data['page_title'] = 'Add Employees Department';
         
-        return view('empDepartments.create')->with(compact('data','employee'));
+        return view('empDepartments.create')->with(compact('data'));
     }
 
     public function store(Request $request)
