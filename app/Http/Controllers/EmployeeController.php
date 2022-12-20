@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EmpDepartment;
 use App\Models\Employee;
+use App\Models\EmpProfile;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -23,8 +24,9 @@ class EmployeeController extends Controller
 
         $empDepartment   = EmpDepartment::all();
         $employee =  Employee::get(); 
+        $empProfile =  EmpProfile::get();
         
-        return view('employees.create')->with(compact('data','empDepartment'));
+        return view('employees.create')->with(compact('data','empDepartment','empProfile'));
     }
 
     public function store(Request $request)
@@ -34,6 +36,7 @@ class EmployeeController extends Controller
             'department_id' => 'required',
             'address' => 'required',
             'employee_no' => 'required',
+            'file' =>  'required',
         ]);
     
         $requestData = $request->all();
@@ -43,10 +46,28 @@ class EmployeeController extends Controller
         $resourceObj->department_id= $requestData['department_id'];
         $resourceObj->address= $requestData['address'];
         $resourceObj->employee_no= $requestData['employee_no'];
-        $resourceObj->save();
+        if($resourceObj->save()){
+           
+            $emp_id = $resourceObj->id;
+    
+            $addressObj = new EmpProfile();
+            $addressObj->employee_id = $emp_id;
+            // $addressObj->file = $requestData['file'];
+            if (isset($requestData['file']) && $requestData['file'] != '') {
+                $addressObj->file = $requestData['file'];
+            }
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = time() . '-' . $file->getClientOriginalName();
+                $file->move(public_path().'/uploads/profile', $fileName);
+                $addressObj->file = $fileName;
+            }
+
+        }
+        $addressObj->save();
 
         return redirect()->route('employees.index')
-                        ->with('success','User created successfully.');
+        ->with('success','User created successfully.');
     }
 
     public function show($id)
@@ -61,7 +82,9 @@ class EmployeeController extends Controller
        $user['page_title'] = 'Edit record';
        
        $empDepartment   = EmpDepartment::all();
-        return view('employees.edit',compact('user','empDepartment'));
+       $empProfile  = EmpProfile::all();
+
+        return view('employees.edit',compact('user','empDepartment','empProfile'));
     }
 
     public function update(Request $request ,$id)
@@ -71,6 +94,7 @@ class EmployeeController extends Controller
             'department_id' => 'required',
             'address' => 'required',
             'employee_no' => 'required',
+            'file' => 'required',
             
         ]);
        
@@ -83,7 +107,13 @@ class EmployeeController extends Controller
             $filterObj->address= $requestData['address'] ?? $filterObj->address;
             $filterObj->employee_no= $requestData['employee_no'] ?? $filterObj->employee_no;
 
-            $filterObj->save();
+            if($filterObj->save()){
+
+                $employee_id = $filterObj->id;
+                $filterAdd  = EmpProfile::where('employee_id', $employee_id)->first();
+                $filterAdd->file = $requestData['file'];
+                }
+                $filterAdd->save();
 
         return redirect()->route('employees.index')->with('success','Employee record updated successfully');
     }

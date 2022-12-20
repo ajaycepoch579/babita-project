@@ -35,12 +35,12 @@
             <td>{{ $user->rollno }}</td>
             <td>{{ $user->studentSingleAddress ? $user->studentSingleAddress->student_address:"" }}</td>
             <td>
-                <form action="{{ route('students.destroy',$user->id) }}" method="POST">
+                
    
                    <button> <a class="btn btn-info" href="{{ route('students.show',$user->id) }}">Show</a></button>
     
                    <button><a class="btn btn-primary" href="{{ route('students.edit',$user->id) }}">Edit</a></button>
-   
+                   <form action="{{ route('students.destroy', $user->id)}}" method="post" style="display: inline-block">
                     @csrf
                     @method('DELETE')
                     {{-- <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{route('users.delete', $user->id)}}"></a> --}}

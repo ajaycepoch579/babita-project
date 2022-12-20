@@ -32,11 +32,27 @@
                 {{ $user->employee_no}}
             </div>
         </div>
+
+        
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Department Name:</strong>
                 {{ $user->departmentRelation ? $user->departmentRelation->department_name:""}}
             </div>
         </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Profile:</strong>
+                {{-- {{ $user->employeeSingleProfile ? $user->employeeSingleProfile->employee_image:"" }} --}}
+                <img class="img-fluid" src="{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:"" }}" width="150" height="150" alt="">
+                <div class="card-img-actions-overlay card-img rounded-circle">
+                    <a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill">
+                        <i class="icon-pencil"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection

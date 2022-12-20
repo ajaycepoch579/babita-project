@@ -12,9 +12,25 @@ class Employee extends Model
     protected $table = 'employee';
   protected $fillable = ['name','department_id','address','employee_no'];
 
-  public $primaryKey = 'id';
+    public $primaryKey = 'id';
 
-  public function departmentRelation(){
-    return $this->belongsTo(EmpDepartment::class,'department_id');
-  }
+  public function departmentRelation()
+    {
+
+       return $this->belongsTo(EmpDepartment::class,'department_id');
+    }
+
+  public function employeeSingleProfile()
+    {
+    
+      return $this->hasOne(EmpProfile::class,'employee_id');
+    }
+
+    public function getImageAttribute($user = '')
+    {
+        if (!empty($user)) {
+            return asset('/uploads/profile/' . $user);
+        }
+        return asset('/images/default-profile.jpg');
+    }
 }

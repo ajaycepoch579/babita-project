@@ -52,6 +52,8 @@
             </div>
         </div>
 
+        
+
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Department Name:</strong>
@@ -60,6 +62,13 @@
                             <option value="{{ $row->id }}">{{ $row->department_name }}</option>
                     @endforeach
                 </select>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Profile:</strong>
+                <input type="file" name="file" class="form-control" placeholder="Employee Image">
             </div>
         </div>
 
