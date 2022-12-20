@@ -29,7 +29,7 @@ class Employee extends Model
     public function getImageAttribute($user = '')
     {
         if (!empty($user)) {
-            return asset('/uploads/profile/' . $user);
+            return asset('/uploads/' . $user);
         }
         return asset('/images/default-profile.jpg');
     }

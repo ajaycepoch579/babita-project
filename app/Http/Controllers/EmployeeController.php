@@ -50,21 +50,21 @@ class EmployeeController extends Controller
            
             $emp_id = $resourceObj->id;
     
-            $addressObj = new EmpProfile();
-            $addressObj->employee_id = $emp_id;
-            // $addressObj->file = $requestData['file'];
-            if (isset($requestData['file']) && $requestData['file'] != '') {
-                $addressObj->file = $requestData['file'];
-            }
+            // $addressObj = new EmpProfile();
+            // $addressObj->employee_id = $emp_id;
             if ($request->hasFile('file')) {
+
                 $file = $request->file('file');
-                $fileName = time() . '-' . $file->getClientOriginalName();
-                $file->move(public_path().'/uploads/profile', $fileName);
-                $addressObj->file = $fileName;
+                $filename = time().'.'.request()->file->getClientOriginalExtension();
+                request()->file->move(public_path('uploads'), $filename);
+                    //$request->image->storeAs('file', $filename);
+                    $addressObj = new EmpProfile();
+                    $addressObj->employee_id = $emp_id;
+                    $addressObj->file=$filename;
+                    $addressObj->save();
             }
 
         }
-        $addressObj->save();
 
         return redirect()->route('employees.index')
         ->with('success','User created successfully.');

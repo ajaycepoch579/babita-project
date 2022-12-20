@@ -45,12 +45,8 @@
             <div class="form-group">
                 <strong>Profile:</strong>
                 {{-- {{ $user->employeeSingleProfile ? $user->employeeSingleProfile->employee_image:"" }} --}}
-                <img class="img-fluid" src="{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:"" }}" width="150" height="150" alt="">
-                <div class="card-img-actions-overlay card-img rounded-circle">
-                    <a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill">
-                        <i class="icon-pencil"></i>
-                    </a>
-                </div>
+                {{-- <img class="img-fluid" src="{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:"" }}" width="150" height="150" alt=""> --}}
+                <img src="/uploads/{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:""  }}" height="300px" width="300px">
             </div>
         </div>
 
