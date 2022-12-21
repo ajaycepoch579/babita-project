@@ -55,19 +55,14 @@ class EmployeeController extends Controller
             if ($request->hasFile('file')) {
 
                 
-                $files = $request->file('file');
-
-                foreach($files as $file){
-                
-                $filename = $file->getClientOriginalName();
-                
-                $file->move(public_path('uploads'), $filename);
-                
-                $addressObj = new EmpProfile();
-                $addressObj->employee_id = $emp_id;
-                $addressObj->file=$filename;
-                $addressObj->save();
-            }
+                $file = $request->file('file');
+                $filename = time().'.'.request()->file->getClientOriginalExtension();
+                request()->file->move(public_path('uploads'), $filename);
+                    //$request->image->storeAs('file', $filename);
+                    $addressObj = new EmpProfile();
+                    $addressObj->employee_id = $emp_id;
+                    $addressObj->file=$filename;
+                    $addressObj->save();
 
         }
     }
