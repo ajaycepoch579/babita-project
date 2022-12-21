@@ -54,18 +54,23 @@ class EmployeeController extends Controller
             // $addressObj->employee_id = $emp_id;
             if ($request->hasFile('file')) {
 
-                $file = $request->file('file');
-                $filename = time().'.'.request()->file->getClientOriginalExtension();
-                request()->file->move(public_path('uploads'), $filename);
-                    //$request->image->storeAs('file', $filename);
-                    $addressObj = new EmpProfile();
-                    $addressObj->employee_id = $emp_id;
-                    $addressObj->file=$filename;
-                    $addressObj->save();
+                
+                $files = $request->file('file');
+
+                foreach($files as $file){
+                
+                $filename = $file->getClientOriginalName();
+                
+                $file->move(public_path('uploads'), $filename);
+                
+                $addressObj = new EmpProfile();
+                $addressObj->employee_id = $emp_id;
+                $addressObj->file=$filename;
+                $addressObj->save();
             }
 
         }
-
+    }
         return redirect()->route('employees.index')
         ->with('success','User created successfully.');
     }
@@ -110,11 +115,18 @@ class EmployeeController extends Controller
             if($filterObj->save()){
 
                 $employee_id = $filterObj->id;
-                $filterAdd  = EmpProfile::where('employee_id', $employee_id)->first();
-                $filterAdd->file = $requestData['file'];
-                }
-                $filterAdd->save();
+                if ($request->hasFile('file')) {
 
+                    $file = $request->file('file');
+                    $filename = time().'.'.request()->file->getClientOriginalExtension();
+                    request()->file->move(public_path('uploads'), $filename);
+                    // $updateObj = new EmpProfile();
+                    $updateObj = new EmpProfile();
+                    $updateObj->employee_id = $employee_id;
+                    $updateObj->file=$filename;
+                    $updateObj->save();
+                }
+            }
         return redirect()->route('employees.index')->with('success','Employee record updated successfully');
     }
 

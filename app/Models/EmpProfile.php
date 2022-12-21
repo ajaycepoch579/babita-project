@@ -16,12 +16,12 @@ class EmpProfile extends Model
     {
         return $this->hasMany(EmpProfile::class,'employee_id');
     }
-    public function getImageAttribute($user = '')
-    {
-        if (!empty($user)) {
-            return asset('/uploads/' . $user);
-        }
-        return asset('/images/default-profile.jpg');
-    }
+    // public function getImageAttribute($user = '')
+    // {
+    //     if (!empty($user)) {
+    //         return asset('/uploads/' . $user);
+    //     }
+    //     return asset('/images/default-profile.jpg');
+    // }
     
 }

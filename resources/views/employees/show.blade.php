@@ -7,7 +7,7 @@
                 <h2> Show Employee Data</h2>
             </div>
             <div class="pull-right">
-                <button><a class="btn btn-primary" href="{{ route('employees.index') }}"> Back</a></button>
+                <a class="btn btn-primary" href="{{ route('employees.index') }}"> Back</a>
             </div>
         </div>
     </div>
@@ -46,7 +46,14 @@
                 <strong>Profile:</strong>
                 {{-- {{ $user->employeeSingleProfile ? $user->employeeSingleProfile->employee_image:"" }} --}}
                 {{-- <img class="img-fluid" src="{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:"" }}" width="150" height="150" alt=""> --}}
-                <img src="/uploads/{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:""  }}" height="300px" width="300px">
+                @forelse ($user->employeeMultipleProfile as $item)
+
+               
+                <img src="/uploads/{{ $item ? $item->file:""  }}" height="300px" width="300px">
+
+                @empty
+                    
+                @endforelse
             </div>
         </div>
 

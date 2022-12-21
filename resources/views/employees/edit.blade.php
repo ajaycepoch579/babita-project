@@ -1,83 +1,66 @@
 @extends('employees.layout')
-   
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit User</h2>
-            </div>
-            <div class="pull-right">
-                <button><a class="btn btn-primary" href="{{ route('employees.index') }}">Back</a></button>
-               
-            </div>
-        </div>
-    </div>
+<style>
+    .container {
+      max-width: 450px;
+    }
+    .push-top {
+      margin-top: 50px;
+    }
+</style>
+<div class="card push-top">
+  <div class="card-header">
+    <h2>Edit & Update Employee Record</h2>
+  </div>
+  <div class="pull-right mt-3">
+    <a class="btn btn-primary" href="{{ route('employees.index') }}">Back</a>
    
+</div>
+  <div class="card-body">
     @if ($errors->any())
-        <div class="alert alert-danger">
-        There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+      <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+      </div><br />
     @endif
-  
-    <form action="{{ route('employee.update',$user->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-   
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                <strong>Name:</strong>
+      <form method="post" action="{{ route('employee.update',$user->id) }}" enctype="multipart/form-data">
+          <div class="form-group">
+              @csrf
+              @method('put')
+              <strong>Name:</strong>
                 <input type="text" name="name" value="{{ $user->name }}" class="form-control" placeholder="Name">
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                 <strong>Department Id:</strong>
-                 <textarea class="form-control" style="height:150px" name="department_id" placeholder="department id">{{ $user->department_id }}</textarea>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                <strong>Employee Address:</strong>
-                <textarea class="form-control" style="height:150px" name="address" placeholder="Employee address">{{ $user->address }}</textarea>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                <strong>Employee No.:</strong>
-                <textarea class="form-control" style="height:150px" name="employee_no" placeholder="Employee No.">{{ $user->employee_no}}</textarea>
-                </div>
-            </div>
-
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                <strong>Employee No.:</strong>
-                <select class="form-control" name="department_id" id="department_id" required="">
-                    @foreach ($empDepartment as $row)
-                            <option value="<?php echo $row->id?>"  <?php if($row->id==$user['department_id']){ echo 'selected'; }?>>{{ $row->department_name }}</option>
-                    @endforeach
-                </select>
-
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                <strong>Profile:</strong>
-                <input type="file" name="file" value="{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:""  }}" class="form-control" placeholder="profile">
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-   
-    </form>
+          </div>
+          {{-- <div class="form-group">
+            <strong>Department Id</strong>
+            <input type="number" name="department_id" value="{{  $user->department_id  }}" class="form-control" placeholder="Department Id">
+          </div> --}}
+          <div class="form-group">
+            <strong>Employee Address</strong>
+            <input type="text" name="address" value="{{ $user->address }}" class="form-control" placeholder="Employee Address">
+          </div>
+          <div class="form-group">
+            <strong>Employee No.</strong>
+            <input type="number" name="employee_no" value="{{ $user->employee_no }}" class="form-control" placeholder="Employee No.">
+          </div>
+          <div class="form-group">
+             <strong>Department Name</strong>
+             <select class="form-control" name="department_id" id="department_id" required="">
+                @foreach ($empDepartment as $row)
+                        <option value="<?php echo $row->id?>"  <?php if($row->id==$user['department_id']){ echo 'selected'; }?>>{{ $row->department_name }}</option>
+                @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <strong>Profile</strong>
+            @foreach ($user->employeeMultipleProfile as $item)
+            <input type="file" name="file" value="{{ $item ? $item->file:"" }}" class="form-control" multiple/>
+            @endforeach
+          </div>
+          <button type="submit" class="btn btn-block btn-danger">Update</button>
+      </form>
+  </div>
+</div>
 @endsection

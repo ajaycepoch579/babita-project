@@ -7,6 +7,9 @@
                 <h2>Employee Record</h2>
             </div>
             <div class="pull-right">
+                <button><a class="btn btn-primary" href="{{ route('employees.index') }}"> Back</a></button>
+            </div>
+            <div class="pull-right">
                <button> <a class="btn btn-success" href="{{ route('empDepartments.create') }}"> Add Employees Department</a></button>
             </div>
         </div>
@@ -37,11 +40,9 @@
    
                     @csrf
                     @method('DELETE')
-                    {{-- <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{route('users.delete', $user->id)}}"></a> --}}
+                    
                     <button type="submit" class="btn btn-danger">Delete</button>
-                    {{-- <button><a href="{{ route('student.destroy', [$user['id']]) }}"
-                                                        class="list-icons-item text-danger" onclick="return confirm('{{ __('Are you sure you want to delete?') }}')" title="Delete"><i
-                                                            class="icon-trash"></i></a> Delete</button> --}}
+                    
                 </form>
             </td>
         </tr>
