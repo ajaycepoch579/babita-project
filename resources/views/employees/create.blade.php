@@ -29,28 +29,28 @@
           <div class="form-group">
               @csrf
               <strong>Name</strong>
-                <input type="text" name="name" class="form-control" placeholder="Name"/>
+                <input type="text" name="name" class="form-control" placeholder="Name" value="{{old('name')}}"/>
           </div>
-          <div class="form-group">
+          {{-- <div class="form-group">
             <strong>Department Id</strong>
             <input type="number" name="department_id" class="form-control" placeholder="Department Id"/>
-          </div>
+          </div> --}}
           <div class="form-group">
             <strong>Employee Address</strong>
-              <input type="text" class="form-control" name="address" placeholder="Employee Address"/>
+              <input type="text" class="form-control" name="address" placeholder="Employee Address" value="{{old('address')}}"/>
           </div>
           <div class="form-group">
             <strong>Employee No.</strong>
-              <input type="number" class="form-control" name="employee_no" placeholder="Employee No."/>
+              <input type="number" class="form-control" name="employee_no" placeholder="Employee No." value="{{old('employee_no')}}"/>
           </div>
-          {{-- <div class="form-group">
+          <div class="form-group">
             <strong>Department Name</strong>
-            <select class="form-control" name="department_id" id="department_id" required="">
+            <select class="form-control" name="department_id" id="department_id" required="" value="{{old('department_id')}}">
                 @foreach ($empDepartment as $row)
                         <option value="{{ $row->id }}">{{ $row->department_name }}</option>
                 @endforeach
             </select>
-          </div> --}}
+          </div>
 
           <div class="form-group">
             <strong>Profile</strong>

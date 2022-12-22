@@ -12,4 +12,10 @@ class EmpDepartment extends Model
     protected $table = 'department';
     //Primary Key
    public $primaryKey = 'id';
+
+
+   public function empList()
+    {
+      return $this->hasMany(Employee::class,'department_id');
+    }
 }

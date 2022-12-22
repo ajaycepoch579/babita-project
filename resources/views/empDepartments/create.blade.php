@@ -30,7 +30,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Department Name:</strong>
-                <input type="text" name="department_name" class="form-control" placeholder="Department Name">
+                <input type="text" name="department_name" class="form-control" placeholder="Department Name" value="{{old('department_name')}}">
             </div>
         </div>
         

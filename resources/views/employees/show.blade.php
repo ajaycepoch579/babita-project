@@ -48,9 +48,9 @@
                 {{-- <img class="img-fluid" src="{{ $user->employeeSingleProfile ? $user->employeeSingleProfile->file:"" }}" width="150" height="150" alt=""> --}}
                 @forelse ($user->employeeMultipleProfile as $item)
 
-               
+                <div class="col-md-6 my-4">
                 <img src="/uploads/{{ $item ? $item->file:""  }}" height="300px" width="300px">
-
+                </div>
                 @empty
                     
                 @endforelse
