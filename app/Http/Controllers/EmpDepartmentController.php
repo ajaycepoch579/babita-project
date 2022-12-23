@@ -7,12 +7,22 @@ use Illuminate\Http\Request;
 
 class EmpDepartmentController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
 
-        $users = EmpDepartment::latest()->paginate(10);
-    
-        return view('empDepartments.index',compact('users'))
+        $users = EmpDepartment::where([
+        ['department_name' ,'!=',NULL],
+        [function ($query) use ($request){
+            if(($term = $request->term)){
+         $query->orWhere('department_name' , 'ILIKE' , '%' . $term . '%')->get();
+            }
+        }] 
+        ])
+         ->orderBy("id" , "DESC")
+         ->paginate(10);
+
+         return view('empDepartments.index',compact('users'))
         ->with('i', (request()->input('page', 1) - 1) * 10);
+
     }
 
     public function create()

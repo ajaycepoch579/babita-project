@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmpDepartmentController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,3 +45,12 @@ Route::post('/empDepartmentcreate', [EmpDepartmentController::class, 'create'])-
 Route::get('/empDepartmentedit/{id}', [EmpDepartmentController::class, 'edit'])->name('empDepartment.edit');
 Route::put('/empDepartmentupdate/{id}', [EmpDepartmentController::class, 'update'])->name('empDepartment.update');
 Route::delete('/empDepartmentdestroy/{id}', [EmpDepartmentController::class, 'destroy'])->name('empDepartment.destroy');
+
+//login registration
+Route::resource('auth', AuthController::class);
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+Route::get('registration', [AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('dashboard', [AuthController::class, 'dashboard']); 

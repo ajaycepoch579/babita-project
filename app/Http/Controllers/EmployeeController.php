@@ -9,12 +9,22 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
 
-        $users = Employee::latest()->paginate(10);
-    
-        return view('employees.index',compact('users'))
+        $users = Employee::where([
+        ['name' ,'!=',NULL],
+        [function ($query) use ($request){
+            if(($term = $request->term)){
+         $query->orWhere('name' , 'ILIKE' , '%' . $term . '%')->get();
+            }
+        }] 
+        ])
+         ->orderBy("id" , "DESC")
+         ->paginate(10);
+
+         return view('employees.index',compact('users'))
         ->with('i', (request()->input('page', 1) - 1) * 10);
+
     }
 
     public function create()
