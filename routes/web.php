@@ -22,6 +22,17 @@ Route::get('/', function () {
 });
 
 
+//login registration
+Route::resource('auth', AuthController::class);
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+Route::get('registration', [AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::group(['middleware' => ['auth']], function () {
+Route::get('dashboard', [AuthController::class, 'dashboard']); 
 Route::resource('students', UserController::class);
 Route::get('/studentindex', [UserController::class, 'index'])->name('student.index');
 Route::get('/studentshow/{id}', [UserController::class, 'show'])->name('student.show');
@@ -46,11 +57,4 @@ Route::get('/empDepartmentedit/{id}', [EmpDepartmentController::class, 'edit'])-
 Route::put('/empDepartmentupdate/{id}', [EmpDepartmentController::class, 'update'])->name('empDepartment.update');
 Route::delete('/empDepartmentdestroy/{id}', [EmpDepartmentController::class, 'destroy'])->name('empDepartment.destroy');
 
-//login registration
-Route::resource('auth', AuthController::class);
-Route::get('login', [AuthController::class, 'index'])->name('login');
-Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
-Route::get('registration', [AuthController::class, 'registration'])->name('register');
-Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('dashboard', [AuthController::class, 'dashboard']); 
+});
